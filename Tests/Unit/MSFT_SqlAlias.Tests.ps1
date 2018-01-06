@@ -36,7 +36,7 @@ $TestEnvironment = Initialize-TestEnvironment `
     -TestType Unit
 
 #endregion HEADER
-$timer = [System.Diagnostics.Stopwatch]::StartNew()
+$script:timer = [System.Diagnostics.Stopwatch]::StartNew()
 
 function Invoke-TestSetup {
 }

@@ -21,7 +21,7 @@ $script:modulesFolderPath = Join-Path -Path $script:resourceModulePath -ChildPat
 
 Import-Module -Name (Join-Path -Path $script:modulesFolderPath -ChildPath 'SqlServerDsc.Common.psm1') -Force
 
-$timer = [System.Diagnostics.Stopwatch]::StartNew()
+$script:timer = [System.Diagnostics.Stopwatch]::StartNew()
 
 # Loading mocked classes
 Add-Type -Path (Join-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs') -ChildPath 'SMO.cs')

@@ -37,7 +37,7 @@ $TestEnvironment = Initialize-TestEnvironment `
     -DSCResourceName $script:dscResourceName `
     -TestType Unit
 
-$timer = [System.Diagnostics.Stopwatch]::StartNew()
+$script:timer = [System.Diagnostics.Stopwatch]::StartNew()
 
 #endregion HEADER
 

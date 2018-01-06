@@ -38,7 +38,7 @@ $TestEnvironment = Initialize-TestEnvironment `
 #endregion HEADER
 
 function Invoke-TestSetup {
-    $timer = [System.Diagnostics.Stopwatch]::StartNew()
+    $script:timer = [System.Diagnostics.Stopwatch]::StartNew()
 }
 
 function Invoke-TestCleanup {
