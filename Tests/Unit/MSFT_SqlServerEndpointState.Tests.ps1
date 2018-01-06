@@ -39,6 +39,8 @@ $TestEnvironment = Initialize-TestEnvironment `
 
 function Invoke-TestSetup
 {
+    $timer = [System.Diagnostics.Stopwatch]::StartNew()
+
     # Importing SQLPS stubs
     Import-Module -Name (Join-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs') -ChildPath 'SQLPSStub.psm1') -Force -Global
 }
@@ -46,6 +48,9 @@ function Invoke-TestSetup
 function Invoke-TestCleanup
 {
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
+
+    Write-Verbose -Message ('Test run for {0} minutes' -f ([timespan]::FromMilliseconds($timer.ElapsedMilliseconds)).ToString("mm\:ss")) -Verbose
+    $timer.Stop()
 }
 
 # Begin Testing

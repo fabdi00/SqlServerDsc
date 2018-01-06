@@ -39,6 +39,7 @@ $TestEnvironment = Initialize-TestEnvironment `
 
 function Invoke-TestSetup
 {
+    $timer = [System.Diagnostics.Stopwatch]::StartNew()
     # Loading mocked classes
     Add-Type -Path (Join-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs') -ChildPath 'SMO.cs')
 }
@@ -46,6 +47,9 @@ function Invoke-TestSetup
 function Invoke-TestCleanup
 {
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
+
+    Write-Verbose -Message ('Test run for {0} minutes' -f ([timespan]::FromMilliseconds($timer.ElapsedMilliseconds)).ToString("mm\:ss")) -Verbose
+    $timer.Stop()
 }
 
 # Begin Testing

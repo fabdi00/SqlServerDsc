@@ -36,12 +36,16 @@ $TestEnvironment = Initialize-TestEnvironment `
     -TestType Unit
 
 #endregion HEADER
+$timer = [System.Diagnostics.Stopwatch]::StartNew()
 
 function Invoke-TestSetup {
 }
 
 function Invoke-TestCleanup {
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
+
+    Write-Verbose -Message ('Test run for {0} minutes' -f ([timespan]::FromMilliseconds($timer.ElapsedMilliseconds)).ToString("mm\:ss")) -Verbose
+    $timer.Stop()
 }
 
 # Begin Testing

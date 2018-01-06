@@ -45,6 +45,8 @@ else
 
 Write-Verbose -Message ('Running integration tests for SSRS version {0}' -f $script:sqlVersion) -Verbose
 
+$timer = [System.Diagnostics.Stopwatch]::StartNew()
+
 # Using try/finally to always cleanup.
 try
 {
@@ -367,5 +369,9 @@ finally
 {
     #region FOOTER
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
+
+    Write-Verbose -Message ('Test run for {0} minutes' -f ([timespan]::FromMilliseconds($timer.ElapsedMilliseconds)).ToString("mm\:ss")) -Verbose
+    $timer.Stop()
+
     #endregion
 }
