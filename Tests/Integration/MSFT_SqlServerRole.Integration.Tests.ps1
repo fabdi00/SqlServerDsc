@@ -29,6 +29,8 @@ $TestEnvironment = Initialize-TestEnvironment `
     -TestType Integration
 #endregion
 
+$script:timer = [System.Diagnostics.Stopwatch]::StartNew()
+
 # Using try/finally to always cleanup.
 try
 {
@@ -419,5 +421,9 @@ finally
 {
     #region FOOTER
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
+
+    Write-Verbose -Message ('Test {1} run for {0} minutes' -f ([timespan]::FromMilliseconds($timer.ElapsedMilliseconds)).ToString("mm\:ss"), $script:DSCResourceFriendlyName) -Verbose
+    $timer.Stop()
+
     #endregion
 }
