@@ -1329,11 +1329,13 @@ InModuleScope 'SqlServerDsc.Common' {
                 }
             }
 
-        Context 'When connecting to the named instance using Windows Authentication impersonation' {
-            It 'Should not throw when connecting' {
-                $mockExpectedDataSource = "Data Source=$env:COMPUTERNAME\$mockInstanceName;User ID=$mockSqlCredentialUserName;Password=$mockSqlCredentialPassword"
+            Context 'When connecting to the default instance using the correct service instance but does not return a correct Analysis Service object' {
+                It 'Should throw the correct error' {
+                    $mockExpectedDataSource = ''
 
-                { Connect-SQLAnalysis -SQLInstanceName $mockInstanceName -SetupCredential $mockSqlCredential } | Should -Not -Throw
+                    Mock -CommandName New-Object `
+                        -ParameterFilter $mockNewObject_MicrosoftAnalysisServicesServer_ParameterFilter `
+                        -Verifiable
 
                     $mockCorrectErrorMessage = ($script:localizedData.FailedToConnectToAnalysisServicesInstance -f $env:COMPUTERNAME)
                     { Connect-SQLAnalysis -FeatureFlag 'AnalysisServicesConnection' } | Should -Throw $mockCorrectErrorMessage
